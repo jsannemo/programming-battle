@@ -1,0 +1,39 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+<h1>Problem {{ chr(ord('A') + problem.contest_order - 1) }} - {{ problem.name }}</h1>
+{# TODO: prettier submission form #}
+{% if logged_in %}
+    <form method="POST" action="/problem/{{ problem.tag }}/submit" enctype="multipart/form-data">
+    {% if role.name == 'solver' %}
+        <div class="form-group">
+            <div class="col-sm-3">
+                <input name="submission" type="file">
+            </div>
+            <div class="col-sm-9">
+                <input class="btn btn-info" type="submit" value="Submit solution" />
+            </div>
+        </div>
+    {% else %}
+        <input name="submission" type="file">
+        <input class="btn btn-info" type="submit" value="Submit testcase" />
+    {% end %}
+    </form>
+{% end %}
+
+<div class="clearfix"></div>
+
+{# TODO: Add button for submission #}
+{# TODO: View your submission status #}
+{# TODO: View number of active submissions and testcases #}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Problem statement</h3>
+    </div>
+    <div class="panel-body">
+        {% autoescape None %}
+        {{ problem_statement }}
+    </div>
+</div>
+
+{% end %}

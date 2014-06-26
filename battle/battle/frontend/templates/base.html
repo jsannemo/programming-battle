@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Programming Battle</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body>
+{% comment TODO: move this into its own file %}
+<header class="navbar navbar-static-top" id="top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">Programming Battle</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                <a href="/standings">Standings</a>
+                </li>
+                <li>
+                <a href="/problems">Problems</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if logged_in %}
+                <li><a href="/team">{{ team.team_name }} -- {{ role.display_name }}</a></li>
+                <li><a href="/logout">Log out</a></li>
+                {% else %}
+                <li><a href="/login">Log in</a></li>
+                {% end %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+{% block page %}{% end %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

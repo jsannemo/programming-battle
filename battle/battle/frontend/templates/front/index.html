@@ -1,0 +1,22 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+<div class="jumbotron">
+    <h1>{{ contest.name }}</h1>
+    <p>This is the Programming Battle contest system for {{ contest.name }}.
+    If you are a team, you can <a href="/login">log in</a>. Spectators can view the
+    <a href="/standings">current standings</a> or read the <a href="/problems">problems</a>.
+    </p>
+    <p>
+    {% if not contest.is_started() %}
+    The contest starts at {{ contest.get_start_time().strftime('%Y-%m-%d %H:%M:%S') }}.
+    {% elif contest.is_running() %}
+    The contest ends at {{ contest.get_end_time().strftime('%Y-%m-%d %H:%M:%S') }}.
+    {% else %}
+    The contest is over.
+    {% end %}
+    </p>
+</div>
+
+
+{% end %}

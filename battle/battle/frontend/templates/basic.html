@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block page %}
+    <div class="container">
+    {% for error in errors %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% end %}
+    {% block content %}{% end %}
+    </div>
+{% end %}

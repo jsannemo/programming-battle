@@ -1,0 +1,35 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+<h1>Standings in {{ contest.name }}</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Team</th>
+        <th>Score</th>
+        {% for problem in contest.problems %}
+        <th><a href="/problem/{{ problem.tag }}">{{ problem.get_letter() }}</a></th>
+        {% end %}
+    </tr>
+
+        {# TODO order by scores #}
+    {% for t in contest.teams %}
+    <tr>
+        <td>{{ t.team_name }}</td>
+        <td>{{ s[t.team_id]['score'] }}</td>
+        {% for p in contest.problems %}
+        <td>
+            {% if 'solution' in s[t.team_id][p.problem_id] %}
+            <a href="/solution/{{ s[t.team_id][p.problem_id]['solution'].solution_id }}">
+                {{ s[t.team_id][p.problem_id]['solution'].get_status().display_name }}
+            </a>
+            {% else %}
+            N/A
+            {% end %}
+        </td>
+        {% end %}
+    </tr>
+    {% end %}
+</table>
+
+{% end %}

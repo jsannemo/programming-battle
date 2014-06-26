@@ -1,0 +1,29 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Team</th>
+            <th>Status</th>
+            <th>Submit time</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for testcase in problem.testcases %}
+        <tr>
+            <td>
+                <a href="/testcase/{{ testcase.testcase_id }}">{{ testcase.testcase_id}}</a>
+            </td>
+            <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.team_name }}</a></td>
+            <td>
+                {{ testcase.get_status().display_name }}
+            </td>
+            <td>{{ testcase.testcase_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+    {% end %}
+    </tbody>
+</table>
+
+{% end %}

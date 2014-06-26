@@ -1,0 +1,52 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+<h1>Team {{ view_team.team_name }}</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Submit time</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for solution in view_team.solutions %}
+        <tr>
+            <td>
+                <a href="/solution/{{ solution.solution_id }}">{{ solution.solution_id}}</a>
+            </td>
+            <td>{{ solution.get_status().display_name }}</td>
+            <td>{{ solution.solution_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+    {% end %}
+    </tbody>
+</table>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Submit time</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for testcase in view_team.testcases %}
+        <tr>
+            <td>
+                <a href="/testcase/{{ testcase.testcase_id }}">{{ testcase.testcase_id}}</a>
+            </td>
+            <td>
+                {{ testcase.get_status().display_name }}
+            </td>
+            <td>{{ testcase.testcase_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+    {% end %}
+    </tbody>
+</table>
+
+
+
+{% end %}
