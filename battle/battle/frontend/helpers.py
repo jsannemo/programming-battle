@@ -27,4 +27,4 @@ def testcase_status(solution):
         bg = 'bg-warning'
     else:
         bg = 'bg-info'
-    return '<td class="%s status"><a href="/solution/%d">%s</a></td>'%(bg, solution.testcase_id, solution.get_status().display_name)
+    return '<td class="%s status"><a href="/testcase/%d">%s</a></td>'%(bg, solution.testcase_id, solution.get_status().display_name)

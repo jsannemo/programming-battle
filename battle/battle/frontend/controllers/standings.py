@@ -6,7 +6,7 @@ from battle.models import Solution
 from battle.api import Status
 
 # TODO: move these to contest settings
-DEFEAT_SCORE = 100
+DEFEAT_SCORE = 1000
 
 class StandingsHandler(BaseHandler):
 
@@ -27,7 +27,7 @@ class StandingsHandler(BaseHandler):
         for team in self.contest.teams:
             for solution in team.solutions:
                 for event in solution.events:
-                    if event.new_status == Status.defeated.name:
+                    if event.new_status == Status.defeated.name and event.testcase.team != event.solution.team:
                         s[event.testcase.team.team_id]['score'] += DEFEAT_SCORE
                     if event.old_status == Status.active.name:
                         start = solution.solution_time - self.contest.start_time

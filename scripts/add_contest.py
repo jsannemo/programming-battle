@@ -40,7 +40,10 @@ def add_problem(sess, contest, contest_config, problem_path, index):
         sess.add(contest)
 
     install_path = os.path.join(config.problem_directory, contest.tag, problem.tag)
-    shutil.rmtree(install_path)
+    try:
+        shutil.rmtree(install_path)
+    except:
+        pass
     shutil.copytree(problem_path, install_path)
 
 def main():

@@ -1,0 +1,8 @@
+name: Tävling Alfa Beta
+start: '2014-06-27 18:30:00'
+length: '10:00:00'
+problems:
+    echo:
+        available_from: '00:00:00'
+    different:
+        available_from: '00:35:00'
