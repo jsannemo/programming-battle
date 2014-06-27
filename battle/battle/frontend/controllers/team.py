@@ -12,7 +12,7 @@ class TeamViewHandler(BaseHandler):
                 return
             team_id = self.team.team_id
         team = self.db.query(Team).get(team_id)
-        if not team:
+        if not team or team.contest != self.contest:
             self.error("Invalid team")
             self.redirect("/")
             return

@@ -1,32 +1,33 @@
 {% extends "../basic.html" %}
 {% block content %}
 
-<div class="page-header">
-    <h1>Log in</h1>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Log in</h1>
+
+        <form class="form-horizontal" role="form" action="/login" method="POST">
+
+            <div class="form-group">
+                <label for="login" class="col-sm-5 control-label">Login:</label>
+                <div class="col-sm-3">
+                    <input name="login" type="text" class="form-control" value="{{ login }}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-5 control-label">Password:</label>
+                <div class="col-sm-3">
+                    <input name="password" type="password" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div style="text-align:right" class="col-sm-offset-5 col-sm-3">
+                    <input type="submit" class="btn btn-info" name="submit" value="Login" />
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
-<form class="form-horizontal" role="form" action="/login" method="POST">
-
-        <div class="form-group">
-            <label for="login" class="col-sm-5 control-label">Login:</label>
-            <div class="col-sm-3">
-                <input name="login" type="text" class="form-control" value="{{ escape(login) }}"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-5 control-label">Password:</label>
-            <div class="col-sm-3">
-                <input name="password" type="password" class="form-control" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div style="text-align:right" class="col-sm-offset-5 col-sm-3">
-                <input type="submit" class="btn btn-info" name="submit" value="Login" />
-            </div>
-        </div>
-
-
-    </form>
-
-    {% end %}
+{% end %}

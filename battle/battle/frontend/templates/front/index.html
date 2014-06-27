@@ -9,7 +9,7 @@
     </p>
     <p>
     {% if not contest.is_started() %}
-    The contest starts at {{ contest.get_start_time().strftime('%Y-%m-%d %H:%M:%S') }}.
+    The contest starts at {{ contest.start_time.strftime('%Y-%m-%d %H:%M:%S') }}.
     {% elif contest.is_running() %}
     The contest ends at {{ contest.get_end_time().strftime('%Y-%m-%d %H:%M:%S') }}.
     {% else %}

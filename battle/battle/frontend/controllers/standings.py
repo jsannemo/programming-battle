@@ -21,7 +21,7 @@ class StandingsHandler(BaseHandler):
                 s[team.team_id][problem.problem_id] = {}
             for solution in team.solutions:
                 problem_id = solution.problem_id
-                if not 'solution' in s[team.team_id][problem_id] and not solution.status == Status.rejected.name:
+                if not 'solution' in s[team.team_id][problem_id] or (s[team.team_id][problem_id]['solution'].status == Status.rejected.name and solution.status != Status.rejected.name):
                     s[team.team_id][problem_id]['solution'] = solution
 
         for team in self.contest.teams:
@@ -40,6 +40,10 @@ class StandingsHandler(BaseHandler):
                     score = int((end - start).total_seconds())
                     s[team.team_id]['score'] += score
 
+        ordered_teams = [t for t in self.contest.teams]
+        ordered_teams = sorted(ordered_teams, key=lambda team: -s[team.team_id]['score'])
+
+        self.set('ordered_teams', ordered_teams)
         self.set('s', s)
 
         self.template('standings/view.html')

@@ -1,6 +1,10 @@
 {% extends "../basic.html" %}
 {% block content %}
 
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Testcases for {{ problem.name }}</h1>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -17,13 +21,13 @@
                 <a href="/testcase/{{ testcase.testcase_id }}">{{ testcase.testcase_id}}</a>
             </td>
             <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.team_name }}</a></td>
-            <td>
-                {{ testcase.get_status().display_name }}
-            </td>
+            {% raw helpers.testcase_status(testcase) %}
             <td>{{ testcase.testcase_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
         </tr>
     {% end %}
     </tbody>
 </table>
+</div>
+</div>
 
 {% end %}

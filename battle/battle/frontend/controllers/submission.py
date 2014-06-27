@@ -7,14 +7,14 @@ from pygments.formatters import HtmlFormatter
 from .base import BaseHandler, valid_problem, require_login
 
 from battle.models import Problem, Solution, TestCase
-from battle.api import detect_language, Role, Status
+from battle.api import detect_language, Role, Status, Language
 
 class SubmitHandler(BaseHandler):
 
     @require_login
     @valid_problem
     def post(self, problem_tag):
-        # TODO ensure we are submitting on a valid problem
+
         problem = Problem.find_by_tag(self.db, problem_tag)[0]
         if 'submission' not in self.request.files:
             self.error('Please choose a file')
@@ -46,6 +46,9 @@ class SolutionViewHandler(BaseHandler):
 
     def get(self, solution_id):
         solution = self.db.query(Solution).get(solution_id)
+        if not solution or solution.problem.contest != self.contest:
+            self.error('Invalid solution')
+            return self.redirect('/')
 
         lexer = get_lexer_by_name(solution.language, stripall=True)
         formatter = HtmlFormatter(linenos=True, cssclass="source", style="monokai")
@@ -56,10 +59,31 @@ class SolutionViewHandler(BaseHandler):
         self.set('display_code', self.logged_in and (self.role == Role.tester or self.team_id == solution.team.team_id))
         self.template('submission/view_solution.html')
 
+class SolutionDownloadHandler(BaseHandler):
+
+    def get(self, solution_id):
+        solution = self.db.query(Solution).get(solution_id)
+        if not solution or solution.problem.contest != self.contest:
+            self.error('Invalid solution')
+            return self.redirect('/')
+
+        if not self.logged_in and (self.role == Role.tester or self.team_id == solution.team.team_id):
+            self.error('You are not allowed to download this solution')
+            return self.redirect('/')
+
+        self.set_header('Content-Type', 'application/octet-stream')
+        # TODO use submitted file name
+        self.set_header('Content-Disposition', 'attachment; filename=%s-%d.%s' % (solution.problem.tag, solution.solution_id, Language[solution.language].extension))
+        self.write(solution.code)
+
 class TestcaseViewHandler(BaseHandler):
 
     def get(self, testcase_id):
         testcase = self.db.query(TestCase).get(testcase_id)
+        if not testcase or testcase.problem.contest != self.contest:
+            self.error('Invalid testcase')
+            return self.redirect('/')
+
 
         lexer = get_lexer_by_name("text", stripall=True)
         formatter = HtmlFormatter(linenos=True, cssclass="source", style="monokai")
@@ -69,6 +93,23 @@ class TestcaseViewHandler(BaseHandler):
         self.set('testcase', testcase)
         self.set('display_test', self.logged_in and (self.role == Role.tester and self.team_id == testcase.team.team_id))
         self.template('submission/view_testcase.html')
+
+class TestcaseDownloadHandler(BaseHandler):
+
+    def get(self, testcase_id):
+        testcase = self.db.query(TestCase).get(testcase_id)
+        if not testcase or testcase.problem.contest != self.contest:
+            self.error('Invalid testcase')
+            return self.redirect('/')
+
+        if not self.logged_in and (self.role == Role.tester and self.team_id == testcase.team.team_id):
+            self.error('You are not allowed to download this solution')
+            return self.redirect('/')
+
+        self.set_header('Content-Type', 'application/octet-stream')
+        # TODO use submitted file name
+        self.set_header('Content-Disposition', 'attachment; filename=' + testcase.problem.tag + '-' + testcase.testcase_id + '.in')
+        self.write(testcase.test)
 
 
 class SolutionListHandler(BaseHandler):

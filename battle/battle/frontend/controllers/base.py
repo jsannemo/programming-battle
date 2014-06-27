@@ -34,6 +34,9 @@ class BaseHandler(tornado.web.RequestHandler):
         self.set_cookie_object('errors', [])
         self.render(template_name, **self._template_arguments)
 
+    def on_finish(self):
+        self.db.close()
+
     def error(self, message):
         self._template_arguments['errors'].append(message)
         self.set_cookie_object('errors', self._template_arguments['errors'])
@@ -56,12 +59,21 @@ def valid_problem(func):
         problem_tag = self.path_kwargs['problem_tag']
         sess = self.db
         problems = Problem.find_by_tag(sess, problem_tag)
-        # TODO Check if problem is active in a contest
+
         if len(problems) == 0:
             self.error('Invalid problem')
-            self.redirect('/')
-        else:
-            return func(self, *args, **kwargs)
+            return self.redirect('/')
+
+        problem = problems[0]
+        if problem.contest != self.contest:
+            self.error('Invalid problem')
+            return self.redirect('/')
+
+        if problem.available_from >= self.contest.get_elapsed():
+            self.error('Invalid problem')
+            return self.redirect('/')
+
+        return func(self, *args, **kwargs)
     return wrap
 
 def require_login(func):

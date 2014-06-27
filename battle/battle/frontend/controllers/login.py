@@ -6,9 +6,10 @@ from .base import BaseHandler
 
 class LoginHandler(BaseHandler):
 
-
-    # TODO check if is logged in
     def get(self):
+        if self.logged_in:
+            self.error('You are already logged in')
+            return self.redirect('/')
         self.set('login', '')
         self.template('team/login.html')
 
@@ -16,7 +17,6 @@ class LoginHandler(BaseHandler):
         login = self.get_argument('login')
         password = self.get_argument('password')
 
-        # TODO check if the team contest is the same as the current(/next) one
         team_info = Team.authenticate(self.db, login, password)
         if not team_info:
             self.error('Your login or password is incorrect')
@@ -24,13 +24,15 @@ class LoginHandler(BaseHandler):
             self.template('team/login.html')
         else:
             (team, role) = team_info
-            # TODO success message
+            if team.contest != self.contest:
+                self.error('The team details provided are for another contest')
+                self.set('login', login)
+                return self.template('team/login.html')
             self.set_cookie_object('team', (team.team_id, role))
             self.redirect('/problems')
 
 class LogoutHandler(BaseHandler):
 
-    # TODO add success message
     def get(self):
         self.set_cookie_object('team', None)
         self.redirect('/')

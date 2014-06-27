@@ -1,0 +1,48 @@
+body {
+    background-color: #eee;
+}
+
+.jumbotron {
+    background-color: #fff;
+}
+
+h1 {
+    font-weight: bold;
+    margin-top: 0;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+table th {
+    background-color: #F6F6F6;
+}
+
+.btn {
+    padding: 5px 8px 5px 8px;
+}
+
+.bg-danger {
+    background-color: #FFDDDD;
+}
+
+.bg-success {
+    background-color: #DFF0D8;
+}
+
+.bg-warning {
+    background-color: #FFF1B8;
+}
+
+.bg-info {
+    background-color: #D8CAE6;
+}
+
+.standings .status {
+    font-weight: bold;
+}

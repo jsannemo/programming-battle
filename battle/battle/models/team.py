@@ -22,7 +22,6 @@ class Team(Base):
 
     @staticmethod
     def authenticate(sess, login, password):
-        # TODO don't use plain text
         teams = sess.query(Team).from_statement('SELECT * FROM team WHERE'
                 '((solver_login = :login AND solver_password = :password) OR (tester_login = :login AND tester_password = :password))'
                 'AND contest_id = :contest_id').params(login=login, password=password, contest_id=Contest.get_relevant_contest(sess).contest_id).all()

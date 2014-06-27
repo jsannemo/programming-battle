@@ -1,35 +1,47 @@
 {% extends "../basic.html" %}
 {% block content %}
 
+<div class="panel panel-default">
+    <div class="panel-body">
+
 <h1>Standings in {{ contest.name }}</h1>
 
-<table class="table table-bordered">
+<table class="table table-bordered standings">
     <tr>
+        <th>Rank</th>
         <th>Team</th>
+        {% if contest.is_started() %}
         <th>Score</th>
-        {% for problem in contest.problems %}
-        <th><a href="/problem/{{ problem.tag }}">{{ problem.get_letter() }}</a></th>
+            {% for problem in contest.problems %}
+            <th><a href="/problem/{{ problem.tag }}">{{ problem.get_letter() }}</a></th>
+            {% end %}
         {% end %}
     </tr>
 
-        {# TODO order by scores #}
-    {% for t in contest.teams %}
+    {% set prev_score = -1 %}
+    {% for i, t in enumerate(ordered_teams) %}
     <tr>
-        <td>{{ t.team_name }}</td>
+        {% if s[t.team_id]['score'] == prev_score %}
+            <td>{{ prev_idx }}</th>
+        {% else %}
+            <td>{{ i + 1 }}</th>
+            {% set prev_score = s[t.team_id]['score'] %}
+            {% set prev_idx = i + 1 %}
+        {% end %}
+        <td><a href="/team/{{ t.team_id }}">{{ t.team_name }}</a></td>
+        {% if contest.is_started() %}
         <td>{{ s[t.team_id]['score'] }}</td>
-        {% for p in contest.problems %}
-        <td>
-            {% if 'solution' in s[t.team_id][p.problem_id] %}
-            <a href="/solution/{{ s[t.team_id][p.problem_id]['solution'].solution_id }}">
-                {{ s[t.team_id][p.problem_id]['solution'].get_status().display_name }}
-            </a>
-            {% else %}
-            N/A
+            {% for p in contest.problems %}
+            {% set cur = s[t.team_id][p.problem_id] %}
+            {% raw helpers.solution_status(None if not 'solution' in cur else cur['solution']) %}
             {% end %}
-        </td>
         {% end %}
     </tr>
     {% end %}
 </table>
+
+
+</div>
+</div>
 
 {% end %}

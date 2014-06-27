@@ -33,10 +33,15 @@ class Verdict(NamedEnum):
     security_violation = ('Security Violation')
     judge_error = ('Judge Error')
 
-class Language(NamedEnum):
+class ExtensionEnum(NamedEnum):
+    def __init__(self, name, extension):
+        self.extension = extension
+        super(ExtensionEnum, self).__init__(name)
 
-    cpp = ('C++')
-    python = ('Python')
+class Language(ExtensionEnum):
+
+    cpp = ('C++', 'cpp')
+    python = ('Python', 'py')
 
 def detect_language(filename):
     extension = os.path.splitext(filename)[-1]

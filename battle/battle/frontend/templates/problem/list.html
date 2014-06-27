@@ -1,25 +1,35 @@
 {% extends "../basic.html" %}
 {% block content %}
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Problem name</th>
-            <th># of testcases</th>
-            <th># of solutions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for problem in problems %}
-        <tr>
-            <td>{{ chr(ord('A') + problem.contest_order - 1) }}</td>
-            <td><a href="/problem/{{ problem.tag }}">{{ problem.name }}</a></td>
-            <td><a href="/problem/{{ problem.tag }}/testcases">{{ len(problem.testcases) }}</a></td>
-            <td><a href="/problem/{{ problem.tag }}/solutions">{{ len(problem.solutions) }}</a></td>
-        </tr>
-    {% end %}
-    </tbody>
-</table>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Problems</h1>
+        {% if not contest.is_started() %}
+        The problems will be available when the contest has started.
+        {% else %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Problem name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for problem in problems %}
+            {% if problem.is_available() %}
+            <tr>
+                <td>{{ chr(ord('A') + problem.contest_order - 1) }}</td>
+                <td><a href="/problem/{{ problem.tag }}">{{ problem.name }}</a></td>
+                <td><a class="btn btn-primary" href="/problem/{{ problem.tag }}/testcases">{{ len(problem.testcases) }} testcases</a>
+                    <a class="btn btn-primary" href="/problem/{{ problem.tag }}/solutions">{{ len(problem.solutions) }} solutions</a></td>
+            </tr>
+            {% end %}
+            {% end %}
+            </tbody>
+        </table>
 
+    </div>
+</div>
+{% end %}
 {% end %}

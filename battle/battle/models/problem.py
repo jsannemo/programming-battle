@@ -24,11 +24,16 @@ class Problem(Base):
         problems = sess.query(Problem).from_statement("SELECT * FROM problem WHERE tag = :tag").params(tag=tag).all()
         return problems
 
+    def is_available(self):
+        return self.contest.get_elapsed() > self.available_from
+
     def get_statement(self):
-        # TODO: return None if problem statement doesnt exists
         path = os.path.join(config.problem_directory, self.contest.tag, self.tag, "problem.html")
-        with open(path, "r") as problem_statement:
-            return problem_statement.read()
+        try:
+            with open(path, "r") as problem_statement:
+                return problem_statement.read()
+        except:
+            return None
 
     def get_letter(self):
         return chr(ord('A') - 1 + self.contest_order)
