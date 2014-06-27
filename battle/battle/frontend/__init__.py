@@ -19,6 +19,7 @@ application = tornado.web.Application([
     (r'/problem/(?P<problem_tag>[^/]+)/solutions', SolutionListHandler),
     (r'/problem/(?P<problem_tag>[^/]+)/testcases', TestcaseListHandler),
     (r'/solution/(?P<solution_id>[^/]+)', SolutionViewHandler),
+    (r'/testcase/(?P<testcase_id>[^/]+)', TestcaseViewHandler),
     (r'/download/solution/(?P<solution_id>[^/]+)', SolutionDownloadHandler),
     (r'/download/testcase/(?P<testcase_id>[^/]+)', TestcaseDownloadHandler),
     (r'/team/(?P<team_id>[^/]+)', TeamViewHandler),
