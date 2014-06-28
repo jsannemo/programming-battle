@@ -113,7 +113,7 @@ class Contest(Base):
         next = Contest.get_next_contest(sess)
         if next:
             return next
-        past = Contest.get_next_contest(sess)
+        past = Contest.get_past_contest(sess)
         if past:
             return past
         raise NoContestError

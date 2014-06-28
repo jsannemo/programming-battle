@@ -1,0 +1,32 @@
+<p>Johan is playing a special version of the card game Yu-Gi-Oh! with Simon. In the game, each card has an attack value ATK and
+a defense value DEF.
+
+<p>A card can be in one of two modes, attack mode or defense mode. When a card A in attack mode
+attacks another card B in defense mode, card B is destroyed if ATK(A) is larger than DEF(B).
+When a card A in attack mode attacks another card B in attack mode, card B is destroyed if ATK(A)
+is larger than ATK(B), and the difference is dealt as damage to the defending players life points.
+
+<p>A card is only allowed to attack one other card per turn.
+
+<p>All of Johan's cards (there are 5 of them) are currently in attack mode, and all of Simon's cards (there are 5 of them) are currently in defense mode.
+Now, the following procedure will play out:
+
+<ul>
+    <li>Johan may attack some of Simon's cards</li>
+    <li>Johan ends his turn and gives the turn to Simon</li>
+    <li>All of Simon's cards will be put in attack mode</li>
+    <li>Simon may attack some of Johan's cards</li>
+</ul>
+
+<p>
+Johan obviously want to lose as little life points as possible the next turn. If he attacks optimally this
+turn, what is the maximum damage Simon can deal to him?
+
+<h2>Input format</h2>
+The first line contains 5 positive integers $0 \le ATK \le 3000$, the attack values of Johan's cards.
+The second line contains 5 positive integers $0 \le ATK \le 3000$, the attack values of Simon's cards.
+The third line contains 5 positive integers $0 \le DEF \le 3000$, the defense values of Simon's cards.
+
+<h2>Output format</h2>
+The first and only line should contain a single integer: the maximum number of life points Johan will lose
+if he plays optimally.

@@ -16,16 +16,17 @@ def sure():
     return True
 
 
-def add_problem(sess, contest, contest_config, problem_path, index):
+def add_problem(sess, contest, contest_config, problem_path):
     tag = os.path.basename(problem_path)
 
     problem_config = yaml.safe_load(open(os.path.join(problem_path, "problem.yaml")).read())
+    index = contest_config['order']
 
     existing = sess.query(Problem).filter_by(tag=tag, contest = contest).all()
 
     if existing:
         problem = existing[0]
-        print("A problem with this tag already exists. Update? (y/n)")
+        print("A problem with tag %s already exists. Update? (y/n)" % tag)
         if not sure():
             return
         problem.name = problem_config['name']
@@ -81,11 +82,9 @@ def main():
     # Add problems
 
     added = []
-    index = 1
     print("Adding problems")
     for problem, config in contest_config['problems'].items():
-        add_problem(sess, contest, config, os.path.join(contest_directory, problem), index)
-        index = index + 1
+        add_problem(sess, contest, config, os.path.join(contest_directory, problem))
         added.append(problem)
     remaining = sess.query(Problem).filter(~Problem.tag.in_(added)).filter_by(contest = contest).all()
     for problem in remaining:

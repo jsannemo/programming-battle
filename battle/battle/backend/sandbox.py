@@ -44,7 +44,7 @@ class Sandbox:
         command += ["--dir=/usr/bin"]
         command += ["--dir=/usr/local/lib"]
         command += ["--dir=/usr/include"]
-        command += ["--dir=/usr/share/pyshared"]
+        command += ["--dir=/usr/local/lib/python3.4/dist-packages/"]
         command += ["--cg-timing"]
         command += ["--processes=128"]
         command += ["--chdir=%s" % self.path]

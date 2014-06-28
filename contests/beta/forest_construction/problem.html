@@ -1,0 +1,25 @@
+<p>Anton, a young mathematican, comes from the cold regions that is northern Sweden. He likes it there, since
+there are a lot of trees. Lately, this has made Anton sad though, since he can't see the forest because of all the trees. Therefore,
+he has asked you to construct a forest.
+
+<p>Since Anton is a mathematican, he doesn't want any ordinary forest - he wants a graph theorical forest.
+As everyone probably knows, a forest is a (possible disconnected) graph without cycles - i.e. a disjoint
+union of trees.
+
+<p>Anton has already decided the number of vertices he wants in his forest, as well as the degree of each node.
+Now, it is your task to construct a forest according to his wishes, or determine that no such forest exists.
+
+<h2>Input format</h2>
+The first line of input is a single integer $0 \le V \le 100$ - the number of vertices in his tree.
+
+The next line should contain $V$ integers $0 \le a_i \le 100$ separated by spaces. These are the degrees
+which Anton wants the vertices to have.
+
+<h2>Output format</h2>
+The first line of output should be <code>"IMPOSSIBLE"</code> if it is impossible to construct such a forest.
+
+Otherwise, the first line should be <code>"POSSIBLE"</code>.
+
+The next lines should contain two integers $1 \le a, b \le V$ each, determining that there should be an edge
+between vertices $a$ and $b$. Note that the vertex with number $i$ must have exactly degree $a_i$, i.e.
+the ordering of the vertices is important.

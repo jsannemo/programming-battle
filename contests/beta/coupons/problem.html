@@ -1,0 +1,21 @@
+<p>Johan lives in Stockholm, which means he have to travel a lot by bus and subway. Travelling costs
+a number of coupons, depending on which zones in Stockholm you travel between. If Johan travels
+between two points on zones A and B, it will cost him $2 + |A-B|$ coupons. However, a ticket
+purchased is valid for an entire hour from the time of purchase. If Johan buys a ticket with
+$X$ coupons, he can travel on any trip which costs at most $X$ coupons. However, if he wants
+to travel on a line which costs $Y$ coupons where Y is greater than X, he must purchase a new ticket
+with at least $Y$ coupons.
+
+<p>Johan is now going to make $N$ trips. For each trip, you will be given the zone Johan
+travels to, as well as the time when he starts his trip. Initially, Johan is located in
+zone 0.
+
+<h2>Input format</h2>
+The first line contains the integer $0 \le N \le 50,000$ - the number of trips Johan wants to make.
+
+The next $N$ lines contains two space-separated integers $0 \le Z \le 10$ and $0 \le T \le 1,000,000,000$,
+the zone and time for Johan's next trip (in seconds from now). The values of $T$ must be strictly increasing.
+
+
+<h2>Output format</h2>
+The first and only line should contain a single integer: the maximum number of coupons Johan may need to use.

@@ -1,0 +1,24 @@
+<p>When Farmer Oskar doesn't watch his cows closely enough, they tend to wander off into the forest to hunt for horse spies.
+To catch an enemy agent horse, the cows first lure it onto a trail and then set up fences at the endpoints of the trail,
+which are $L$ meters apart. Two previously hidden cows then reveal themselves, having concealed themselves in nearby bushes, and the
+chase is on. The cows are located at positions $A$ and $B$ meters from the left endpoint.
+
+<p>One particular horse, positioned $P$ meters from the left endpoint, who they attempted to catch, rembembered to bring his
+walke-talkie and have now called for backups. The backups will be there to rescue him very soon, so he wonder if he can hold
+the cows off for long enough for his help to come.
+
+<p>Horse chasing happens in 1 minute intervals. During each minute, each of the two cows choose to go either 0 or 1 meter in
+some direction. While the cows move, the horse then jump either 0, 1 or 2 meters in some direction as well. This means that
+the horse knows where the cows are moving before they arrive at their new location. The horse can jump over a cow though,
+if it occupies the same position as a cow it cannot jump over the other cow as well.
+
+<p>The horse is captured if after a one-minute interval, a cow occupies the same position as the hores. How long will
+it take for the horse to certainly be captured, if both the cows and the horse move optimally?
+
+<h2>Input format</h2>
+The first line of input consists of four integers $1 \le L \le 1\,000, 0 \le A \le L, 0 \le B \le L, 0 \le P  \leL$ as described in the problem statement, separated by spaces.
+
+All the numbers $A$, $B$ and $P$ are distinct.
+
+<h2>Output format</h2>
+A single integer, the number of minutes before the cows can catch the horse no matter how the horse moves.

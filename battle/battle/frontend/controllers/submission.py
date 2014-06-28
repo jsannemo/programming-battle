@@ -22,7 +22,7 @@ class SubmitHandler(BaseHandler):
 
         file_info = self.request.files['submission'][0]
         file_name = file_info['filename']
-        file_body = file_info['body'].decode('UTF-8')
+        file_body = file_info['body'].decode('UTF-8').replace("\r", "")
 
         now = datetime.now(pytz.utc)
         if self.role == Role.solver:
@@ -45,6 +45,11 @@ class SubmitHandler(BaseHandler):
 class SolutionViewHandler(BaseHandler):
 
     def get(self, solution_id):
+        try:
+            solution_id = int(solution_id)
+        except:
+            self.error("Invalid solution")
+            return self.redirect("/")
         solution = self.db.query(Solution).get(solution_id)
         if not solution or solution.problem.contest != self.contest:
             self.error('Invalid solution')
@@ -62,6 +67,12 @@ class SolutionViewHandler(BaseHandler):
 class SolutionDownloadHandler(BaseHandler):
 
     def get(self, solution_id):
+        try:
+            solution_id = int(solution_id)
+        except:
+            self.error("Invalid solution")
+            return self.redirect("/")
+
         solution = self.db.query(Solution).get(solution_id)
         if not solution or solution.problem.contest != self.contest:
             self.error('Invalid solution')
@@ -79,6 +90,12 @@ class SolutionDownloadHandler(BaseHandler):
 class TestcaseViewHandler(BaseHandler):
 
     def get(self, testcase_id):
+        try:
+            testcase_id = int(testcase_id)
+        except:
+            self.error("Invalid testcase")
+            return self.redirect("/")
+
         testcase = self.db.query(TestCase).get(testcase_id)
         if not testcase or testcase.problem.contest != self.contest:
             self.error('Invalid testcase')
@@ -97,6 +114,12 @@ class TestcaseViewHandler(BaseHandler):
 class TestcaseDownloadHandler(BaseHandler):
 
     def get(self, testcase_id):
+        try:
+            testcase_id = int(testcase_id)
+        except:
+            self.error("Invalid testcase")
+            return self.redirect("/")
+
         testcase = self.db.query(TestCase).get(testcase_id)
         if not testcase or testcase.problem.contest != self.contest:
             self.error('Invalid testcase')

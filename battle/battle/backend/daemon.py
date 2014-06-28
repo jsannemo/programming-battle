@@ -22,10 +22,10 @@ class JudgeDaemon:
                 next_testcase = None if len(testcases) == 0 else testcases[0]
                 if next_testcase and (not next_solution or next_testcase.testcase_time <= next_solution.solution_time):
                     self.judge_testcase(sess, next_testcase)
+                    testcases = testcases[1:]
                 else:
                     self.judge_solution(sess, next_solution)
-                solutions = solutions[1:]
-                testcases = testcases[1:]
+                    solutions = solutions[1:]
             sleep(1)
 
     # TODO run the testcase on the solutions to get the time limit

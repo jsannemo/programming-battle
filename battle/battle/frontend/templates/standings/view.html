@@ -15,6 +15,8 @@
                 {% for problem in contest.problems %}
                 {% if problem.is_available() %}
                 <th><a href="/problem/{{ problem.tag }}">{{ problem.get_letter() }}</a></th>
+                {% else %}
+                <th>{{ problem.get_letter() }}</th>
                 {% end %}
                 {% end %}
                 {% end %}
@@ -37,6 +39,8 @@
                 {% if p.is_available() %}
                 {% set cur = s[t.team_id][p.problem_id] %}
                 {% raw helpers.solution_status(None if not 'solution' in cur else cur['solution']) %}
+                {% else %}
+                <th></th>
                 {% end %}
                 {% end %}
                 {% end %}
