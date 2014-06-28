@@ -64,7 +64,7 @@ class JudgeDaemon:
         result = program.test(testcase.test)
 
         if result.time_limit_exceeded:
-            judgement.verdict = Verdict.time_limit.exceeded.name
+            judgement.verdict = Verdict.time_limit_exceeded.name
         elif result.run_time_error:
             judgement.verdict = Verdict.run_time_error.name
         else:

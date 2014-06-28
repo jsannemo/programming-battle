@@ -113,7 +113,8 @@ class Sandbox:
             result.unsuccessful = True
 
         for line in meta_file.readlines():
-            key, value = line.split(":")
+            key, value = line.strip().split(":")
+            print("%s:%s"%(key, value))
             if key == "exitcode" or key == "exitsig":
                 result.status_code = int(value)
             if key == "status":
