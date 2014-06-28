@@ -24,9 +24,9 @@
             {% for i, t in enumerate(ordered_teams) %}
             <tr>
                 {% if s[t.team_id]['score'] == prev_score %}
-                <td>{{ prev_idx }}</th>
+                <td>{{ prev_idx }}</td>
                 {% else %}
-                <td>{{ i + 1 }}</th>
+                <td>{{ i + 1 }}</td>
                 {% set prev_score = s[t.team_id]['score'] %}
                 {% set prev_idx = i + 1 %}
                 {% end %}
