@@ -39,12 +39,20 @@ class Sandbox:
         command += ["--box-id=%d" % self.box_id]
         command += ["--cg"]
         command += ["-e"]
-        command += ["--dir=/usr"]
-        command += ["--dir=/usr/lib"]
-        command += ["--dir=/usr/bin"]
-        command += ["--dir=/usr/local/lib"]
-        command += ["--dir=/usr/include"]
-        command += ["--dir=/usr/local/lib/python3.4/dist-packages/"]
+
+        paths = [
+            "/usr",
+            "/usr/lib",
+            "/usr/bin",
+            "/usr/local/lib",
+            "/usr/include",
+            "/usr/local/lib/python3.4/dist-packages/",
+        ]
+
+        for path in paths:
+            if os.path.exists(path):
+                command += ["--dir=" + path]
+
         command += ["--cg-timing"]
         command += ["--processes=128"]
         command += ["--chdir=%s" % self.path]
