@@ -1,5 +1,41 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: #eee;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px;
+    padding-bottom: 90px;
+}
+
+#push, #footer {
+    height: 50px;
+}
+
+#footer {
+    background-color: #222;
+    border-top: 1px solid #080808;
+    text-align: right;
+    padding: 15px 15px 5px 15px;
+    color: #777;
+}
+
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 .jumbotron {
@@ -46,3 +82,4 @@ table th {
 .standings .status {
     font-weight: bold;
 }
+
