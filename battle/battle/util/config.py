@@ -24,7 +24,7 @@ class Config:
     def _load_file(self, path):
         try:
             with io.open(path, 'rt', encoding='UTF-8') as f:
-                config = yaml.load(f.read())
+                config = yaml.safe_load(f.read())
         except IOError as error:
             return
         except ValueError as error:
