@@ -18,21 +18,28 @@ def_s = [int(x) for x in test_case.readline().split()]
 # Sorted by how quickly we want to kill them
 cards = sorted([(atk_s[i], -def_s[i]) for i in range(5)], reverse=True)
 
+print(cards)
+
 optimal = 0
+
+used = [False]*len(atk)
 
 new_cards = []
 for card in cards:
     a, d = card
     killed = False
     for j in range(len(atk)):
-        if atk[j] > -d:
+        if atk[j] > -d and not used[j]:
             killed = True
-            del atk[j]
+            used[j] = True
             break
     if not killed:
         new_cards.append(a)
 
 new_cards = sorted(new_cards, reverse=True)
+print(new_cards)
+
+print(atk)
 
 for card in new_cards:
     if card > atk[0]:
