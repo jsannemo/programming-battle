@@ -16,7 +16,7 @@ class StandingsHandler(BaseHandler):
 
         s = {}
         for team in self.contest.teams:
-            s[team.team_id] = {'score': 0}
+            s[team.team_id] = {'solver_score': 0, 'tester_score': 0}
             for problem in self.contest.problems:
                 s[team.team_id][problem.problem_id] = {}
             for solution in team.solutions:
@@ -32,17 +32,20 @@ class StandingsHandler(BaseHandler):
                     continue
                 for event in solution.events:
                     if event.new_status == Status.defeated.name and event.testcase.team != event.solution.team:
-                        s[event.testcase.team.team_id]['score'] += DEFEAT_SCORE
+                        s[event.testcase.team.team_id]['tester_score'] += DEFEAT_SCORE
                     if event.old_status == Status.active.name:
                         start = solution.solution_time - self.contest.start_time
                         end = event.event_time - self.contest.start_time
                         score = int((end - start).total_seconds())
-                        s[team.team_id]['score'] += score
+                        s[team.team_id]['solver_score'] += score
                 if solution.status == Status.active.name:
                     start = solution.solution_time - self.contest.start_time
                     end = min(now, self.contest.get_end_time()) - self.contest.start_time
                     score = int((end - start).total_seconds())
-                    s[team.team_id]['score'] += score
+                    s[team.team_id]['solver_score'] += score
+
+        for team in self.contest.teams:
+            s[team.team_id]['score'] = s[team.team_id]['solver_score'] + s[team.team_id]['tester_score']
 
         ordered_teams = [t for t in self.contest.teams]
         ordered_teams = sorted(ordered_teams, key=lambda team: -s[team.team_id]['score'])
