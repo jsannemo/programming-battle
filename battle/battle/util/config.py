@@ -11,7 +11,8 @@ class Config:
     def __init__(self):
         self.web_config = {
             'debug' : False,
-            'template_path' : 'battle/battle/frontend/templates'
+            'template_path' : 'battle/battle/frontend/templates',
+            'static_path' : 'battle/battle/frontend/public'
         }
         self.problem_directory = '/opt/progbattle/installed_problems'
         self._load()
