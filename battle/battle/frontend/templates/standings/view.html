@@ -7,45 +7,59 @@
         <h1>Standings in {{ contest.name }}</h1>
 
         <table class="table table-bordered standings">
-            <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                {% if contest.is_started() %}
-                <th>Score</th>
-                {% for problem in contest.problems %}
-                {% if problem.is_available() %}
-                <th><a href="/problem/{{ problem.tag }}">{{ problem.get_letter() }}</a></th>
-                {% else %}
-                <th>{{ problem.get_letter() }}</th>
+            <thead>
+                <tr>
+                    <th colspan="2"></th>
+                    {% if contest.is_started() %}
+                        <th colspan="3">Score</th>
+                        <th colspan="{{len(contest.problems)}}">Problems</th>
+                    {% end %}
+                </tr>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team</th>
+                    {% if contest.is_started() %}
+                    <th>Solver</th>
+                    <th>Tester</th>
+                    <th>Total</th>
+                    {% for problem in contest.problems %}
+                    {% if problem.is_available() %}
+                    <th><a href="/problem/{{ problem.tag }}">{{ problem.get_letter() }}</a></th>
+                    {% else %}
+                    <th>{{ problem.get_letter() }}</th>
+                    {% end %}
+                    {% end %}
+                    {% end %}
+                </tr>
+            </thead>
+            <tbody>
+                {% set prev_score = -1 %}
+                {% for i, t in enumerate(ordered_teams) %}
+                <tr>
+                    {% if s[t.team_id]['score'] == prev_score %}
+                    <td>{{ prev_idx }}</td>
+                    {% else %}
+                    <td>{{ i + 1 }}</td>
+                    {% set prev_score = s[t.team_id]['score'] %}
+                    {% set prev_idx = i + 1 %}
+                    {% end %}
+                    <td><a href="/team/{{ t.team_id }}">{{ t.team_name }}</a></td>
+                    {% if contest.is_started() %}
+                    <td>{{ s[t.team_id]['solver_score'] }}</td>
+                    <td>{{ s[t.team_id]['tester_score'] }}</td>
+                    <td>{{ s[t.team_id]['score'] }}</td>
+                    {% for p in contest.problems %}
+                    {% if p.is_available() %}
+                    {% set cur = s[t.team_id][p.problem_id] %}
+                    {% raw helpers.solution_status(None if not 'solution' in cur else cur['solution']) %}
+                    {% else %}
+                    <th></th>
+                    {% end %}
+                    {% end %}
+                    {% end %}
+                </tr>
                 {% end %}
-                {% end %}
-                {% end %}
-            </tr>
-
-            {% set prev_score = -1 %}
-            {% for i, t in enumerate(ordered_teams) %}
-            <tr>
-                {% if s[t.team_id]['score'] == prev_score %}
-                <td>{{ prev_idx }}</td>
-                {% else %}
-                <td>{{ i + 1 }}</td>
-                {% set prev_score = s[t.team_id]['score'] %}
-                {% set prev_idx = i + 1 %}
-                {% end %}
-                <td><a href="/team/{{ t.team_id }}">{{ t.team_name }}</a></td>
-                {% if contest.is_started() %}
-                <td>{{ s[t.team_id]['score'] }}</td>
-                {% for p in contest.problems %}
-                {% if p.is_available() %}
-                {% set cur = s[t.team_id][p.problem_id] %}
-                {% raw helpers.solution_status(None if not 'solution' in cur else cur['solution']) %}
-                {% else %}
-                <th></th>
-                {% end %}
-                {% end %}
-                {% end %}
-            </tr>
-            {% end %}
+            </tbody>
         </table>
 
 
