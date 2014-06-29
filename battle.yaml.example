@@ -1,0 +1,6 @@
+database: "postgresql://USER:PASS@localhost:5432/DB"
+
+web_config:
+    cookie_secret: "RANDOM STRING"
+    # debug: true
+

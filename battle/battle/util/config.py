@@ -1,8 +1,8 @@
 import io
-import json
+import yaml
 import logging
 
-CONFIG_PATHS = ['/etc/battle/battle.conf', 'battle.conf']
+CONFIG_PATHS = ['/etc/battle/battle.yaml', 'battle.yaml']
 
 # TODO: make prettier, recursive config
 
@@ -24,7 +24,7 @@ class Config:
     def _load_file(self, path):
         try:
             with io.open(path, 'rt', encoding='UTF-8') as f:
-                config = json.load(f)
+                config = yaml.load(f.read())
         except IOError as error:
             return
         except ValueError as error:
