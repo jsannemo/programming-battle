@@ -2,7 +2,7 @@ import io
 import yaml
 import logging
 
-CONFIG_PATHS = ['/etc/battle/battle.yaml', 'battle.yaml']
+CONFIG_PATHS = ['/opt/progbattle/battle.yaml', 'battle.yaml']
 
 # TODO: make prettier, recursive config
 
