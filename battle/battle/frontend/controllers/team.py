@@ -10,7 +10,7 @@ class TeamViewHandler(BaseHandler):
                 self.error('You must be logged in to view your team page')
                 self.redirect("/")
                 return
-            team_id = self.team.team_id
+            team_id = self.author.team.team_id
         try:
             team_id = int(team_id)
         except:

@@ -25,19 +25,19 @@ class SubmitHandler(BaseHandler):
         file_body = file_info['body'].decode('UTF-8').replace("\r", "")
 
         now = datetime.now(pytz.utc)
-        if self.role == Role.solver:
+        if self.author.role == Role.solver:
             language = detect_language(file_name)
             if not language:
                 self.error('Invalid language')
                 return self.redirect('/problem/%s' % problem_tag)
 
-            sub = Solution(problem_id=problem.problem_id, team_id=self.team_id, language=language.name, status=Status.queued.name, solution_time=now, code=file_body)
+            sub = Solution(problem_id=problem.problem_id, team_id=self.team_id, language=language.name, status=Status.queued.name, submission_time=now, code=file_body)
 
             self.db.add(sub)
             self.db.commit()
             self.redirect('/solution/%d' % sub.solution_id)
         else:
-            sub = TestCase(problem_id=problem.problem_id, team_id=self.team_id, test=file_body, status=Status.queued.name, testcase_time = now)
+            sub = TestCase(problem_id=problem.problem_id, team_id=self.team_id, test=file_body, status=Status.queued.name, submission_time = now)
             self.db.add(sub)
             self.db.commit()
             self.redirect('/testcase/%d' % sub.testcase_id)
@@ -61,7 +61,7 @@ class SolutionViewHandler(BaseHandler):
         self.set('source_style', formatter.get_style_defs('.source pre'))
         self.set('code', result)
         self.set('solution', solution)
-        self.set('display_code', self.logged_in and (self.role == Role.tester or self.team_id == solution.team.team_id))
+        self.set('display_code', self.logged_in and (self.author.role == Role.tester or self.team_id == solution.team.team_id))
         self.template('submission/view_solution.html')
 
 class SolutionDownloadHandler(BaseHandler):
@@ -78,7 +78,7 @@ class SolutionDownloadHandler(BaseHandler):
             self.error('Invalid solution')
             return self.redirect('/')
 
-        if not self.logged_in and (self.role == Role.tester or self.team_id == solution.team.team_id):
+        if not self.logged_in and (self.author.role == Role.tester or self.team_id == solution.team.team_id):
             self.error('You are not allowed to download this solution')
             return self.redirect('/')
 
@@ -108,7 +108,7 @@ class TestcaseViewHandler(BaseHandler):
         self.set('source_style', formatter.get_style_defs('.source pre'))
         self.set('test', result)
         self.set('testcase', testcase)
-        self.set('display_test', self.logged_in and (self.role == Role.tester and self.team_id == testcase.team.team_id))
+        self.set('display_test', self.logged_in and (self.author.role == Role.tester and self.team_id == testcase.team.team_id))
         self.template('submission/view_testcase.html')
 
 class TestcaseDownloadHandler(BaseHandler):
@@ -125,7 +125,7 @@ class TestcaseDownloadHandler(BaseHandler):
             self.error('Invalid testcase')
             return self.redirect('/')
 
-        if not self.logged_in and (self.role == Role.tester and self.team_id == testcase.team.team_id):
+        if not self.logged_in and (self.author.role == Role.tester and self.team_id == testcase.team.team_id):
             self.error('You are not allowed to download this solution')
             return self.redirect('/')
 

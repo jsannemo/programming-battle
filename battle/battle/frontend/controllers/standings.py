@@ -20,7 +20,7 @@ class StandingsHandler(BaseHandler):
             for problem in self.contest.problems:
                 s[team.team_id][problem.problem_id] = {}
             for solution in team.solutions:
-                if solution.solution_time > self.contest.get_end_time():
+                if solution.submission_time > self.contest.get_end_time():
                     continue
                 problem_id = solution.problem_id
                 if not 'solution' in s[team.team_id][problem_id] or (s[team.team_id][problem_id]['solution'].status == Status.rejected.name and solution.status != Status.rejected.name):
@@ -28,18 +28,18 @@ class StandingsHandler(BaseHandler):
 
         for team in self.contest.teams:
             for solution in team.solutions:
-                if solution.solution_time > self.contest.get_end_time():
+                if solution.submission_time > self.contest.get_end_time():
                     continue
                 for event in solution.events:
                     if event.new_status == Status.defeated.name and event.testcase.team != event.solution.team:
                         s[event.testcase.team.team_id]['tester_score'] += DEFEAT_SCORE
                     if event.old_status == Status.active.name:
-                        start = solution.solution_time - self.contest.start_time
+                        start = solution.submission_time - self.contest.start_time
                         end = event.event_time - self.contest.start_time
                         score = int((end - start).total_seconds())
                         s[team.team_id]['solver_score'] += score
                 if solution.status == Status.active.name:
-                    start = solution.solution_time - self.contest.start_time
+                    start = solution.submission_time - self.contest.start_time
                     end = min(now, self.contest.get_end_time()) - self.contest.start_time
                     score = int((end - start).total_seconds())
                     s[team.team_id]['solver_score'] += score

@@ -1,1 +1,3 @@
 name: Coupons
+time_limit: 10
+memory_limit: 262144

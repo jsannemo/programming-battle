@@ -20,9 +20,9 @@
                 <td>
                     <a href="/solution/{{ solution.solution_id }}">{{ solution.solution_id}}</a>
                 </td>
-                <td><a href="/team/{{ solution.team.team_id }}">{{ solution.team.team_name }}</a></td>
+                <td><a href="/team/{{ solution.team.team_id }}">{{ solution.team.name }}</a></td>
                 {% raw helpers.solution_status(solution) %}
-                <td>{{ solution.solution_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ solution.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
             {% end %}
             </tbody>

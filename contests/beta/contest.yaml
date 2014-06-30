@@ -1,16 +1,21 @@
 name: Battle Test of Test Battle
 start: '2014-06-28 14:00:00'
-length: '02:00:00'
+duration: '02:00:00'
+defeat_score: 1000
+active_score: 1
+initial_tokens: 5
+token_regeneration_time: '5:00'
+max_tokens: 10
 problems:
     forest_construction:
         available_from: '00:00:00'
-        order: 1
+        letter: 'A'
     coupons:
         available_from: '00:30:00'
-        order: 2
+        letter: 'B'
     ambush:
         available_from: '01:00:00'
-        order: 3
+        letter: 'C'
     yugioh:
         available_from: '01:30:00'
-        order: 4
+        letter: 'D'

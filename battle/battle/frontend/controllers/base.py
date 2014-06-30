@@ -1,7 +1,7 @@
 import pickle
 import tornado.web
 
-from battle.models import Session, Contest, Team, Problem
+from battle.models import Session, Contest, Author, Problem
 
 class BaseHandler(tornado.web.RequestHandler):
 
@@ -9,17 +9,15 @@ class BaseHandler(tornado.web.RequestHandler):
         self.db = Session()
         self._template_arguments = {}
         self.contest = Contest.get_relevant_contest(self.db)
-        self.logged_in = self.get_cookie_object('team')
+        self.logged_in = self.get_cookie_object('author')
 
         if self.logged_in:
-            (team_id, role) = self.logged_in
-            team = self.db.query(Team).get(team_id)
-            if team:
-                self.team = self.db.query(Team).get(team_id)
-                self.team_id = team_id
-                self.role = role
-                self.set('team', self.team)
-                self.set('role', self.role)
+            author_id = self.logged_in
+            author = self.db.query(Author).get(author_id)
+            if author:
+                self.author = self.db.query(Author).get(author_id)
+                self.author_id = author_id
+                self.set('author', self.author)
             else:
                 self.logged_in = False
         self.set('logged_in', True if self.logged_in else False)

@@ -43,7 +43,7 @@
                     {% set prev_score = s[t.team_id]['score'] %}
                     {% set prev_idx = i + 1 %}
                     {% end %}
-                    <td><a href="/team/{{ t.team_id }}">{{ t.team_name }}</a></td>
+                    <td><a href="/team/{{ t.team_id }}">{{ t.name }}</a></td>
                     {% if contest.is_started() %}
                     <td>{{ s[t.team_id]['solver_score'] }}</td>
                     <td>{{ s[t.team_id]['tester_score'] }}</td>

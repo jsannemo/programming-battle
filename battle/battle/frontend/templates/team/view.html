@@ -1,7 +1,7 @@
 {% extends "../basic.html" %}
 {% block content %}
 
-<h1>Team {{ view_team.team_name }}</h1>
+<h1>Team {{ view_team.name }}</h1>
 
 <div class="panel panel-default">
     <div class="panel-body">
@@ -21,7 +21,7 @@
                     <a href="/solution/{{ solution.solution_id }}">{{ solution.solution_id}}</a>
                 </td>
                 {% raw helpers.solution_status(solution) %}
-                <td>{{ solution.solution_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ solution.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
             {% end %}
             </tbody>
@@ -47,7 +47,7 @@
                     <a href="/testcase/{{ testcase.testcase_id }}">{{ testcase.testcase_id}}</a>
                 </td>
                 {% raw helpers.testcase_status(testcase) %}
-                <td>{{ testcase.testcase_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ testcase.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
             {% end %}
             </tbody>

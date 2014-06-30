@@ -8,10 +8,10 @@ def main():
     tag = argv[2]
     contest_id = argv[3]
     available_from = argv[4]
-    problem_order = argv[5]
+    letter = argv[5]
 
     s = Session()
-    s.add(Problem(problem_name=name, problem_tag=tag, contest_id=contest_id, available_from=available_from, problem_order=problem_order))
+    s.add(Problem(problem_name=name, problem_tag=tag, contest_id=contest_id, available_from=available_from, letter=letter))
     s.commit()
 
 if __name__ == '__main__':

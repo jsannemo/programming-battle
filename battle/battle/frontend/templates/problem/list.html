@@ -19,14 +19,14 @@
             {% for problem in problems %}
             {% if problem.is_available() %}
             <tr>
-                <td>{{ chr(ord('A') + problem.contest_order - 1) }}</td>
+                <td>{{problem.get_letter()}}</td>
                 <td><a href="/problem/{{ problem.tag }}">{{ problem.name }}</a></td>
                 <td><a class="btn btn-primary" href="/problem/{{ problem.tag }}/testcases">{{ len(problem.testcases) }} testcases</a>
                     <a class="btn btn-primary" href="/problem/{{ problem.tag }}/solutions">{{ len(problem.solutions) }} solutions</a></td>
             </tr>
             <tr>
             {% else %}
-                <td>{{ chr(ord('A') + problem.contest_order - 1) }}</td>
+                <td>{{problem.get_letter()}}</td>
                 <td>{{ problem.name }}</a></td>
                 <td>This problems becomes available {{ problem.available_from }} after start</td>
             </tr>

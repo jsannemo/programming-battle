@@ -3,14 +3,14 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <h1>Testcase - {{ testcase.problem.name }} - {{ testcase.team.team_name }}</h1>
+        <h1>Testcase - {{ testcase.problem.name }} - {{ testcase.team.name }}</h1>
         <table class="table table-bordered">
             <tr><th>Problem</th><th>Team</th><th>Status</th><th>Submitted</th></tr>
             <tr>
                 <td><a href="/problem/{{ testcase.problem.tag }}">{{ testcase.problem.get_letter() }} - {{ testcase.problem.name }}</a></td>
-                <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.team_name }}</a></td>
+                <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.name }}</a></td>
                 <td>{{ testcase.get_status().display_name }}</td>
-                <td>{{ testcase.testcase_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ testcase.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
         </table>
     </div>
@@ -37,7 +37,7 @@
             {% for judgement in testcase.judgements %}
             <tr>
                 <td><a href="/solution/{{judgement.solution_id}}">{{ judgement.solution_id }}</a></td>
-                <td><a href="/team/{{judgement.solution.team.team_id}}">{{ judgement.solution.team.team_name }}</a></td>
+                <td><a href="/team/{{judgement.solution.team.team_id}}">{{ judgement.solution.team.name }}</a></td>
                 <td>{{ judgement.runtime }}</td>
                 <td>{{ judgement.memory }}</td>
                 <td>{{ judgement.get_verdict().display_name }}</td>

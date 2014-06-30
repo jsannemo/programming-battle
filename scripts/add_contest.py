@@ -20,7 +20,6 @@ def add_problem(sess, contest, contest_config, problem_path):
     tag = os.path.basename(problem_path)
 
     problem_config = yaml.safe_load(open(os.path.join(problem_path, "problem.yaml")).read())
-    index = contest_config['order']
 
     existing = sess.query(Problem).filter_by(tag=tag, contest = contest).all()
 
@@ -32,11 +31,21 @@ def add_problem(sess, contest, contest_config, problem_path):
         problem.name = problem_config['name']
         problem.available_from = contest_config['available_from']
         problem.contest = contest
-        problem.contest_order = index
+        problem.letter = contest_config['letter']
+        problem.time_limit = problem_config['time_limit']
+        problem.memory_limit = problem_config['memory_limit']
 
     else:
         print("Adding problem %s (%s)" % (tag, problem_config['name']))
-        problem = Problem(name = problem_config['name'], tag = tag, available_from = contest_config['available_from'], contest = contest, contest_order = index)
+        problem = Problem(
+                name = problem_config['name'],
+                tag = tag,
+                available_from = contest_config['available_from'],
+                contest = contest,
+                letter = contest_config['letter'],
+                time_limit = problem_config['time_limit'],
+                memory_limit = problem_config['memory_limit'],
+            )
 
         sess.add(contest)
 
@@ -68,14 +77,29 @@ def main():
         contest.name = contest_config['name']
         contest.tag = contest_tag
         contest.start_time = contest_config['start']
-        contest.length = contest_config['length']
+        contest.duration = contest_config['duration']
+        contest.defeat_score = contest_config['defeat_score'],
+        contest.active_score = contest_config['active_score'],
+        contest.initial_tokens = contest_config['initial_tokens'],
+        contest.token_regeneration_time = contest_config['token_regeneration_time'],
+        contest.max_tokens = contest_config['max_tokens'],
 
     else:
         print("Adding contest %s (%s)" % (contest_tag, contest_config['name']))
         print("Start time %s" % contest_config['start'])
-        print("Length %s" % contest_config['length'])
+        print("Duration %s" % contest_config['duration'])
 
-        contest = Contest(name = contest_config['name'], tag = contest_tag, start_time = contest_config['start'], length = contest_config['length'])
+        contest = Contest(
+                name = contest_config['name'],
+                tag = contest_tag,
+                start_time = contest_config['start'],
+                duration = contest_config['duration'],
+                defeat_score = contest_config['defeat_score'],
+                active_score = contest_config['active_score'],
+                initial_tokens = contest_config['initial_tokens'],
+                token_regeneration_time = contest_config['token_regeneration_time'],
+                max_tokens = contest_config['max_tokens'],
+            )
 
         sess.add(contest)
 
@@ -92,13 +116,16 @@ def main():
         if sure():
             sess.delete(problem)
 
-    existing_teams = [team.team_name for team in contest.teams]
-    print("\n\n")
+    existing_teams = [team.name for team in contest.teams]
+    print("\n")
     for team in open(os.path.join(contest_directory, "teams"), "r").readlines():
-        if team not in  existing_teams:
+        team = team.strip()
+
+        if team not in existing_teams:
             add_team(sess, contest.contest_id, team)
-            print("\n\n\n\n")
-    print("\n\n")
+            print("\n")
+
+    print("\n")
 
     sess.commit()
 

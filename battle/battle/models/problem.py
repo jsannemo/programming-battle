@@ -6,6 +6,7 @@ import os.path
 from . import Base
 from battle.util.config import config
 
+
 class Problem(Base):
     __tablename__ = 'problem'
 
@@ -13,11 +14,13 @@ class Problem(Base):
     name = Column(String, nullable=False)
     tag = Column(String, nullable=False)
     available_from = Column(Interval, nullable=False)
+    letter = Column(String, nullable=False)
     contest_id = Column(Integer, ForeignKey('contest.contest_id'))
-    contest_order = Column(Integer, nullable=False)
+    time_limit = Column(Integer, nullable=False) # seconds
+    memory_limit = Column(Integer, nullable=False) # kilobytes
 
-    testcases = relationship('TestCase', backref='problem', order_by='desc(TestCase.testcase_time)')
-    solutions = relationship('Solution', backref='problem', order_by='desc(Solution.solution_time)')
+    testcases = relationship('TestCase', backref='problem', order_by='desc(TestCase.submission_time)')
+    solutions = relationship('Solution', backref='problem', order_by='desc(Solution.submission_time)')
 
     @staticmethod
     def find_by_tag(sess, tag):
@@ -36,7 +39,7 @@ class Problem(Base):
             return None
 
     def get_letter(self):
-        return chr(ord('A') - 1 + self.contest_order)
+        return self.letter
 
 
     __table_args__ = ( UniqueConstraint('tag', 'contest_id'), )

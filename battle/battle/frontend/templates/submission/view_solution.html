@@ -4,15 +4,15 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        <h1>Solution - {{ solution.problem.name }} - {{ solution.team.team_name }}</h1>
+        <h1>Solution - {{ solution.problem.name }} - {{ solution.team.name }}</h1>
 
         <table class="table table-bordered">
             <tr><th>Problem</th><th>Team</th><th>Status</th><th>Submitted</th></tr>
             <tr>
                 <td><a href="/problem/{{ solution.problem.tag }}">{{ solution.problem.get_letter() }} - {{ solution.problem.name }}</a></td>
-                <td><a href="/team/{{ solution.team.team_id }}">{{ solution.team.team_name }}</a></td>
+                <td><a href="/team/{{ solution.team.team_id }}">{{ solution.team.name }}</a></td>
                 <td>{{ solution.get_status().display_name }}</td>
-                <td>{{ solution.solution_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ solution.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
         </table>
 

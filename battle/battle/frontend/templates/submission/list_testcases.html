@@ -20,9 +20,9 @@
             <td>
                 <a href="/testcase/{{ testcase.testcase_id }}">{{ testcase.testcase_id}}</a>
             </td>
-            <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.team_name }}</a></td>
+            <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.name }}</a></td>
             {% raw helpers.testcase_status(testcase) %}
-            <td>{{ testcase.testcase_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{{ testcase.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
         </tr>
     {% end %}
     </tbody>
