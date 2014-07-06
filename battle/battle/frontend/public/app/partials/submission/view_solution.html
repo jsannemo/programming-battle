@@ -1,0 +1,55 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <h1>Solution - {{ solution.problem.name }} - {{ solution.team.name }}</h1>
+
+        <table class="table table-bordered">
+            <tr><th>Problem</th><th>Team</th><th>Status</th><th>Submitted</th></tr>
+            <tr>
+                <td><a href="/problem/{{ solution.problem.tag }}">{{ solution.problem.get_letter() }} - {{ solution.problem.name }}</a></td>
+                <td><a href="/team/{{ solution.team.team_id }}">{{ solution.team.name }}</a></td>
+                <td>{{ solution.get_status().display_name }}</td>
+                <td>{{ solution.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+{% if display_code %}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a class="btn btn-info" style="float: right" href="/download/solution/{{ solution.solution_id}}">Download</a>
+        <h1>Code</h2>
+        {% raw code %}
+    </div>
+</div>
+<style>
+{{ source_style }}
+</style>
+
+{% end %}
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <tr><th>Test case</th><th>Verdict</th><th>Time</th><th>Memory</th></tr>
+            {% for judgement in solution.judgements %}
+            <tr>
+                <td><a href="/testcase/{{judgement.testcase_id}}">{{ judgement.testcase_id }}</a></td>
+                <td>{{ judgement.get_verdict().display_name }}</td>
+                <td>{{ judgement.runtime }}</td>
+                <td>{{ judgement.memory }}</td>
+            </tr>
+            {% end %}
+        </table>
+    </div>
+</div>
+
+
+{% end %}

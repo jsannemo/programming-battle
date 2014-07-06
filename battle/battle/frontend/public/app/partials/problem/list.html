@@ -1,0 +1,32 @@
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Problems</h1>
+
+        <p ng-if="!contest.is_started()">The problems will be available when the contest has started.</p>
+
+        <table ng-if="contest.is_started()" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Problem name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="problem in problems">
+                    <td ng-if="problem.is_available()">{{problem.get_letter()}}</td>
+                    <td ng-if="problem.is_available()"><a href="#/problem/{{ problem.tag }}">{{ problem.name }}</a></td>
+                    <td ng-if="problem.is_available()"><a class="btn btn-primary" href="#/problem/{{ problem.tag }}/testcases">{{ problem.testcases.length }} testcases</a>
+                        <a class="btn btn-primary" href="#/problem/{{ problem.tag }}/solutions">{{ problem.solutions.length }} solutions</a></td>
+
+                    <td ng-if="!problem.is_available()">{{problem.get_letter()}}</td>
+                    <td ng-if="!problem.is_available()">{{ problem.name }}</a></td>
+                    <td ng-if="!problem.is_available()">This problems becomes available {{ problem.available_from }} after start</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

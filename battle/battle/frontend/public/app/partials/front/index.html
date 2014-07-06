@@ -1,0 +1,12 @@
+
+<div class="jumbotron">
+    <h1>{{ contest.name }}</h1>
+    <p>This is the Programming Battle contest system for {{ contest.name }}.
+    If you are a team, you can <a href="#/login">log in</a>. Spectators can view the
+    <a href="#/standings">current standings</a> or read the <a href="#/problems">problems</a>.
+    </p>
+    <p ng-if="!contest.is_started()">The contest starts at {{ contest.start_time }}.</p>
+    <p ng-if="contest.is_started() && contest.is_running()">The contest ends at {{ contest.get_end_time() }}.</p>
+    <p ng-if="contest.is_started() && !contest.is_running()">The contest is over.</p>
+</div>
+

@@ -1,0 +1,33 @@
+{% extends "../basic.html" %}
+{% block content %}
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Testcases for {{ problem.name }}</h1>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Team</th>
+            <th>Status</th>
+            <th>Submit time</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for testcase in problem.testcases %}
+        <tr>
+            <td>
+                <a href="/testcase/{{ testcase.testcase_id }}">{{ testcase.testcase_id}}</a>
+            </td>
+            <td><a href="/team/{{ testcase.team.team_id }}">{{ testcase.team.name }}</a></td>
+            {% raw helpers.testcase_status(testcase) %}
+            <td>{{ testcase.submission_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+    {% end %}
+    </tbody>
+</table>
+</div>
+</div>
+
+{% end %}

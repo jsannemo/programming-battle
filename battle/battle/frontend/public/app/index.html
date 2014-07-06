@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Programming Battle</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="/static/css/bootstrap.css">
+<link rel="stylesheet" href="/static/css/custom.css">
+
+<!-- Angular.js and our app -->
+<script type="text/javascript" src="/static/js/angular-1.2.19/angular.js"></script>
+<script type="text/javascript" src="/static/js/angular-1.2.19/angular-route.js"></script>
+<script type="text/javascript" src="/static/app/app.js"></script>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body ng-app="battle" ng-controller="BattleController">
+
+<div id="wrap">
+
+    <!-- TODO: move this into its own file -->
+    <header class="navbar navbar-static-top navbar-default navbar-inverse" id="top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="#/" class="navbar-brand">Programming Battle</a>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li>
+                    <a href="#/standings">Standings</a>
+                    </li>
+                    <li>
+                    <a href="#/problems">Problems</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="logged_in"><a href="#/team">{{ author.username }}: {{ author.role }} for team {{ author.team.name }}</a></li>
+                    <li ng-if="logged_in"><a href="#/logout">Log out</a></li>
+
+                    <li ng-if="!logged_in"><a href="#/login">Log in</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-body" style="display: flex">
+
+                <div ng-if="contest.is_running()" style="width: 130px; padding-right: 10px">{{ contest.get_elapsed_str() }} elapsed</div>
+                <div ng-if="contest.is_running()" class="progress" style="height: 20px; width: 60%; flex: 2; margin-bottom: 0">
+                    <div ng-class="{'progress-bar':true, 'progress-bar-danger': contest.get_progress() >= 95, 'progress-bar-warning': contest.get_progress() < 95 && contest.get_progress() >= 85, 'contest-bar-success': contest.get_progress() < 85}" role="progressbar" aria-valuenow="{{ contest.get_progress() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{contest.get_progress() }}%;">
+                    </div>
+
+                </div>
+                <div ng-if="contest.is_running()" style="width: 120px; padding-left: 10px; text-align: right">{{ contest.get_remaining_str() }} remaining</div>
+
+                <div ng-if="!contest.is_running() && contest.is_finished()" class="progress" style="height: 20px; margin: 0; width: 100%">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                        <span style="font-size: 10pt; line-height: 12pt">The contest is over</span>
+                    </div>
+                </div>
+
+                <div ng-if="!contest.is_running() && !contest.is_finished()" class="progress" style="height: 20px; margin: 0; width: 100%">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                        <span style="font-size: 10pt; line-height: 12pt">{{ contest.get_until_start_str() }} until start</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="alert alert-danger" ng-repeat="error in errors">{{ error }}</div>
+
+        <div ng-view></div>
+    </div>
+
+</div>
+
+<div id="footer">
+    <div class="container">
+        <p class="muted credit">the <a href="https://github.com/jsannemo/programming-battle">Programming Battle</a> platform</p>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
