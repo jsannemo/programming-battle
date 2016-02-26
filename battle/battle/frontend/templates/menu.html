@@ -1,0 +1,25 @@
+<header class="navbar navbar-static-top navbar-default navbar-inverse" id="top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">Programming Battle</a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="/standings">Standings</a>
+        </li>
+        <li>
+          <a href="/problems">Problems</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if logged_in %}
+        <li><a href="/team">Team {{ team.name }}</a></li>
+        <li><a href="/logout">Log out</a></li>
+        {% else %}
+        <li><a href="/login">Log in</a></li>
+        {% end %}
+      </ul>
+    </nav>
+  </div>
+</header>

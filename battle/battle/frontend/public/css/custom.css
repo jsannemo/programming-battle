@@ -83,3 +83,31 @@ table th {
     font-weight: bold;
 }
 
+
+/* Progressbar */
+#contest-progressbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#progressbar-elapsed {
+  padding-right: 10px;
+  order: -1;
+}
+
+#progressbar-remaining {
+  padding-left: 10px;
+  flex: 0 0 7em;
+}
+
+#progressbar-outer {
+  height: 20px;
+  margin-bottom: -2px;
+  flex: 1;
+}
+
+#progressbar-inner {
+  transition: none !important;
+}
+
