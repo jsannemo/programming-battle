@@ -91,7 +91,7 @@ class Standings:
     def stop_scoring(self, solution, time):
         # TODO how should this scoring work?
         score = int((time - solution.submission_time).total_seconds())
-        self.teams[solution.team.team_id].score_submission(solution.problem, score)
+        self.teams[solution.team_id].score_submission(solution.problem, score)
         self.solutions.remove(solution)
 
     def process_testcase(self, case):
@@ -101,7 +101,7 @@ class Standings:
             judgement = solution.get_judgement_for(case)
             if judgement and judgement.verdict != Verdict.solved.name:
                 self.stop_scoring(solution, case.submission_time)
-                self.teams[case.team].score_test(case.problem)
+                self.teams[case.team_id].score_test(case.problem)
                 continue
         self.cases.append(case)
 
@@ -130,7 +130,7 @@ class TeamStanding:
 
     def add_solution(self, solution):
         problem = solution.problem.problem_id
-        previous = [None if problem not in self.solutions else self.solutions]
+        previous = None if problem not in self.solutions else self.solutions
         if solution.get_status() == Status.testing or solution.get_status() == Status.active:
             self.solutions[problem] = solution
         elif solution.get_status() == Status.defeated and (previous is None or previous.status in [Status.defeated, Status.rejected]):
