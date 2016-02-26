@@ -38,7 +38,7 @@
             <tr>
                 <td><a href="/solution/{{judgement.solution_id}}">{{ judgement.solution_id }}</a></td>
                 <td><a href="/team/{{judgement.solution.team.team_id}}">{{ judgement.solution.team.name }}</a></td>
-                <td>{{ judgement.runtime }}</td>
+                <td>{{ judgement.time }}</td>
                 <td>{{ judgement.memory }}</td>
                 <td>{{ judgement.get_verdict().display_name }}</td>
             </tr>

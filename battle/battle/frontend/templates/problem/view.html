@@ -16,7 +16,7 @@
         <hr>
         <div style="margin: auto">
             <form method="POST" action="/problem/{{ problem.tag }}/submit" enctype="multipart/form-data">
-                {% if author.role.name == 'solver' %}
+                {% if author.role == 'solver' %}
                 <div class="form-group">
                     <div class="col-sm-3">
                         <input name="submission" type="file">

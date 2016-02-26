@@ -46,9 +46,14 @@ class Solution(Base):
     def get_status(self):
         return Status[self.status]
 
+    def get_judgement_for(self, testcase):
+        for judgement in self.judgements:
+            if judgement.testcase_id == testcase.testcase_id:
+                return judgement
+        return None
+
     judgements = relationship('Judgement', backref='solution', order_by='desc(Judgement.judgement_id)')
     files = relationship('SolutionFile', backref='solution', order_by='SolutionFile.file_name')
-
 
 class SolutionFile(Base):
     __tablename__ = 'solution_file'

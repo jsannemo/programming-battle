@@ -15,8 +15,9 @@ class BaseHandler(tornado.web.RequestHandler):
             author_id = self.logged_in
             author = self.db.query(Author).get(author_id)
             if author:
-                self.author = self.db.query(Author).get(author_id)
-                self.author_id = author_id
+                self.author = author
+                self.author_id = author.author_id
+                self.team_id = author.team_id
                 self.set('author', self.author)
             else:
                 self.logged_in = False

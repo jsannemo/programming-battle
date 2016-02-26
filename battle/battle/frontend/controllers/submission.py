@@ -6,7 +6,7 @@ from pygments.formatters import HtmlFormatter
 
 from .base import BaseHandler, valid_problem, require_login
 
-from battle.models import Problem, Solution, TestCase
+from battle.models import Problem, Solution, SolutionFile, TestCase
 from battle.api import detect_language, Role, Status, Language
 
 class SubmitHandler(BaseHandler):
@@ -25,19 +25,21 @@ class SubmitHandler(BaseHandler):
         file_body = file_info['body'].decode('UTF-8').replace("\r", "")
 
         now = datetime.now(pytz.utc)
-        if self.author.role == Role.solver:
+        if self.author.get_role() == Role.solver:
             language = detect_language(file_name)
             if not language:
                 self.error('Invalid language')
                 return self.redirect('/problem/%s' % problem_tag)
 
-            sub = Solution(problem_id=problem.problem_id, team_id=self.team_id, language=language.name, status=Status.queued.name, submission_time=now, code=file_body)
+            sub = Solution(problem_id=problem.problem_id, team_id=self.team_id, language=language.name, status=Status.queued.name, submission_time=now)
+            sub_file = SolutionFile(solution=sub, file_name=file_name, contents=file_body)
 
             self.db.add(sub)
+            self.db.add(sub_file)
             self.db.commit()
             self.redirect('/solution/%d' % sub.solution_id)
         else:
-            sub = TestCase(problem_id=problem.problem_id, team_id=self.team_id, test=file_body, status=Status.queued.name, submission_time = now)
+            sub = TestCase(problem_id=problem.problem_id, team_id=self.team_id, contents=file_body, status=Status.queued.name, submission_time = now)
             self.db.add(sub)
             self.db.commit()
             self.redirect('/testcase/%d' % sub.testcase_id)
@@ -55,13 +57,16 @@ class SolutionViewHandler(BaseHandler):
             self.error('Invalid solution')
             return self.redirect('/')
 
+        solution_file = solution.files[0]
+
+# TODO fix multiple files
         lexer = get_lexer_by_name(solution.language, stripall=True)
         formatter = HtmlFormatter(linenos=True, cssclass="source", style="monokai")
-        result = highlight(solution.code, lexer, formatter)
+        result = highlight(solution_file.contents, lexer, formatter)
         self.set('source_style', formatter.get_style_defs('.source pre'))
         self.set('code', result)
         self.set('solution', solution)
-        self.set('display_code', self.logged_in and (self.author.role == Role.tester or self.team_id == solution.team.team_id))
+        self.set('display_code', self.logged_in and (self.author.get_role() == Role.tester or self.team_id == solution.team.team_id))
         self.template('submission/view_solution.html')
 
 class SolutionDownloadHandler(BaseHandler):
@@ -104,7 +109,7 @@ class TestcaseViewHandler(BaseHandler):
 
         lexer = get_lexer_by_name("text", stripall=True)
         formatter = HtmlFormatter(linenos=True, cssclass="source", style="monokai")
-        result = highlight(testcase.test, lexer, formatter)
+        result = highlight(testcase.contents, lexer, formatter)
         self.set('source_style', formatter.get_style_defs('.source pre'))
         self.set('test', result)
         self.set('testcase', testcase)

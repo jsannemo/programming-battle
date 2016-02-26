@@ -1,8 +1,15 @@
 name: Tävling Alfa Beta
-start: '2014-06-27 18:30:00'
+start: '2016-02-26 16:30:00'
 duration: '10:00:00'
+defeat_score: 200
+active_score: 5
+initial_tokens: 10
+max_tokens: 10
+token_regeneration_time: 00:02:00
 problems:
-    echo:
-        available_from: '00:00:00'
-    different:
-        available_from: '00:35:00'
+  echo:
+    letter: 'A'
+    available_from: '00:00:00'
+  different:
+    letter: 'B'
+    available_from: '00:35:00'

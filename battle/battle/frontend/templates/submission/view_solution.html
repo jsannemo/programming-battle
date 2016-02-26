@@ -43,7 +43,7 @@
             <tr>
                 <td><a href="/testcase/{{judgement.testcase_id}}">{{ judgement.testcase_id }}</a></td>
                 <td>{{ judgement.get_verdict().display_name }}</td>
-                <td>{{ judgement.runtime }}</td>
+                <td>{{ judgement.time }}</td>
                 <td>{{ judgement.memory }}</td>
             </tr>
             {% end %}

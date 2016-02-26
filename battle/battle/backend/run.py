@@ -121,7 +121,8 @@ class OutputValidator(Program):
 class SolutionProgram(Program):
 
     def __init__(self, solution):
-        super(SolutionProgram, self).__init__(solution.code, "solution", "/opt/progbattle/runs/%d"%solution.solution_id, Language[solution.language])
+        # TODO: support multiple files
+        super(SolutionProgram, self).__init__(solution.files[0].contents, "solution", "/opt/progbattle/runs/%d"%solution.solution_id, Language[solution.language])
 
     def test(self, testcase):
         result = self.run([], testcase)
