@@ -19,7 +19,6 @@ from sqlalchemy.orm import sessionmaker
 
 Session = sessionmaker(engine)
 
-from .author import Author
 from .team import Team
 from .contest import Contest
 from .problem import Problem
